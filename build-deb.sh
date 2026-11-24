@@ -12,7 +12,7 @@ install -Dm644 copyright "$stage/usr/share/doc/jatayu-gallery/copyright"
 mkdir -p "$stage/DEBIAN"
 cat > "$stage/DEBIAN/control" <<'CONTROL'
 Package: jatayu-gallery
-Version: 0.3.4-1
+Version: 0.4.0-1
 Architecture: all
 Maintainer: JatayuOS
 Depends: python3 (>= 3.11), python3-pyqt5, python3-pil (>= 9.1)
@@ -22,4 +22,4 @@ Homepage: https://jatayuos.in
 Description: Image viewer and editor for JatayuOS
  Browse local photographs, make basic edits, and export a separate copy.
 CONTROL
-dpkg-deb --root-owner-group --build "$stage" ../jatayu-gallery_0.3.4-1_all.deb
+dpkg-deb --root-owner-group --build "$stage" ../jatayu-gallery_0.4.0-1_all.deb

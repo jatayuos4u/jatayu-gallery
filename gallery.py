@@ -16,7 +16,7 @@ IMAGE_FORMATS = ('JPEG', 'PNG', 'WEBP', 'BMP', 'GIF', 'TIFF', 'ICO')
 MAX_PIXELS = 32_000_000
 NEUTRAL = (0, 0, 0)
 ICON = 'jatayu-gallery'
-VERSION = '0.3.4'
+VERSION = '0.4.0'
 
 GUIDE_TOPICS = (
     ('Getting started', '''
@@ -78,6 +78,7 @@ GUIDE_TOPICS = (
         <table cellspacing="7">
           <tr><th align="left">Shortcut</th><th align="left">Action</th></tr>
           <tr><td>Ctrl+O</td><td>Open an image</td></tr>
+          <tr><td>Ctrl+W</td><td>Close the current image and keep Gallery open</td></tr>
           <tr><td>Left / Right</td><td>Previous or next image</td></tr>
           <tr><td>0</td><td>Fit the image to the window</td></tr>
           <tr><td>F11 / Esc</td><td>Toggle Full Screen / exit Full Screen</td></tr>
@@ -369,6 +370,9 @@ class Gallery(W.QMainWindow):
         top.addWidget(self.button('Open', self.choose))
         self.save_button = self.button('Save a Copy', self.save)
         top.addWidget(self.save_button)
+        self.close_image_button = self.button('Close Image', self.close_image)
+        self.close_image_button.setToolTip('Close Image (Ctrl+W)')
+        top.addWidget(self.close_image_button)
         top.addStretch()
         help_button = self.button('Help', None)
         help_menu = W.QMenu(help_button)
@@ -551,7 +555,7 @@ class Gallery(W.QMainWindow):
         self.thumbs.setChecked(True)
         self.film.hide()
         self.set_edit(False)
-        for key, callback in [('Ctrl+O', self.choose), ('Ctrl+Shift+S', self.save),
+        for key, callback in [('Ctrl+O', self.choose), ('Ctrl+W', self.close_image), ('Ctrl+Shift+S', self.save),
                               ('Ctrl+Z', self.undo), ('Ctrl+Shift+Z', self.redo),
                               ('Left', lambda: self.navigate(-1)), ('Right', lambda: self.navigate(1)),
                               ('0', self.canvas.fit), ('F11', self.fullscreen),
@@ -765,6 +769,32 @@ class Gallery(W.QMainWindow):
                 event.acceptProposedAction()
                 break
 
+    def close_image(self):
+        if self.original is None:
+            return
+        self.stop_slideshow()
+        if not self.confirm_leave():
+            return
+        self.files = []
+        self.index = -1
+        self.history.clear()
+        self.position = 0
+        self.original = self.saved = self.preview_key = None
+        self.thumbnail_timer.stop()
+        self.thumb_pending = iter(())
+        self.thumb_buttons.clear()
+        old_film = self.film.takeWidget()
+        if old_film is not None:
+            old_film.deleteLater()
+        self.film.hide()
+        self.canvas.original = G.QPixmap()
+        self.canvas.image = G.QPixmap()
+        self.canvas.anchor = None
+        self.canvas.fit()
+        self.set_edit(False)
+        self.exit_fullscreen()
+        self.refresh()
+
     def confirm_leave(self):
         self.commit_adjustment()
         if not self.history or self.history[self.position] is self.saved:
@@ -890,6 +920,7 @@ class Gallery(W.QMainWindow):
         self.fullscreen_button.setEnabled(enabled)
         self.play_button.setEnabled(len(self.files) > 1)
         self.save_button.setEnabled(enabled)
+        self.close_image_button.setEnabled(enabled)
         self.edit_button.setEnabled(enabled)
         self.previous.setEnabled(self.index > 0)
         self.following.setEnabled(enabled and self.index + 1 < len(self.files))
@@ -897,6 +928,8 @@ class Gallery(W.QMainWindow):
         self.redo_button.setEnabled(self.position + 1 < len(self.history))
         self.counter.setText(f'{self.index + 1} of {len(self.files)}' if enabled else '')
         if not enabled:
+            self.filename.clear()
+            self.setWindowTitle('Jatayu Gallery')
             return
         source, values = self.history[self.position]
         name = self.files[self.index].name

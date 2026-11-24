@@ -1,4 +1,4 @@
-# Jatayu Gallery 0.3.4
+# Jatayu Gallery 0.4.0
 
 A local image viewer and editor designed for JatayuOS and Debian 13. Uses Qt Widgets through PyQt5 and Pillow. The window uses the system title bar so Plasma retains its normal window controls.
 
@@ -6,7 +6,7 @@ A local image viewer and editor designed for JatayuOS and Debian 13. Uses Qt Wid
 
 Download the Debian package, open a terminal in the download folder, and run:
 
-    sudo apt install ./jatayu-gallery_0.3.4-1_all.deb
+    sudo apt install ./jatayu-gallery_0.4.0-1_all.deb
 
 Launch Jatayu Gallery from the application menu or use your file manager's Open With menu.
 
@@ -32,6 +32,8 @@ From this directory run:
 On Debian 13 with the dependencies installed, run directly with:
 
     /usr/bin/python3 gallery.py photo.jpg
+
+Use **Close Image** or **Ctrl+W** to return to the empty viewer. Gallery prompts if there are unsaved edits.
 
 ## License
 
