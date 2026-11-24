@@ -2,13 +2,19 @@
 
 A local image viewer and editor designed for JatayuOS and Debian 13. Uses Qt Widgets through PyQt5 and Pillow. The window uses the system title bar so Plasma retains its normal window controls.
 
-## Install
+## Download
 
-Download the Debian package, open a terminal in the download folder, and run:
+[**Download Jatayu Gallery 0.4.0 for JatayuOS and Debian 13 (.deb)**](https://github.com/jatayuos4u/jatayu-gallery/releases/download/v0.4.0/jatayu-gallery_0.4.0-1_all.deb)
+
+Open a terminal in the download folder and run:
 
     sudo apt install ./jatayu-gallery_0.4.0-1_all.deb
 
 Launch Jatayu Gallery from the application menu or use your file manager's Open With menu.
+
+## Screenshot
+
+![Jatayu Gallery showing a waterfall image, thumbnail strip, and Close Image control](docs/jatayu-gallery-screenshot.png)
 
 ## Use
 
