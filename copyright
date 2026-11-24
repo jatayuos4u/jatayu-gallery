@@ -1,0 +1,17 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Jatayu Gallery
+Source: https://github.com/jatayuos4u/jatayu-gallery
+
+Files: gallery.py build-deb.sh README.md jatayu-gallery.desktop
+Copyright: 2026 JatayuOS contributors
+License: GPL-3
+
+Files: jatayu-gallery.png
+Copyright: JatayuOS
+License: JatayuOS artwork
+ The icon is derived from the JatayuOS project artwork supplied for Gallery.
+ This notice makes no separate license grant for that artwork.
+
+License: GPL-3
+ This software is licensed under version 3 of the GNU General Public License.
+ On Debian systems see /usr/share/common-licenses/GPL-3 for the full text.

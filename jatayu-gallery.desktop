@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Jatayu Gallery
+Name[hi]=जटायु गैलरी
+Comment=View and edit local images
+Comment[hi]=स्थानीय चित्र देखें और संपादित करें
+Exec=jatayu-gallery %f
+Icon=jatayu-gallery
+Terminal=false
+Type=Application
+Categories=Graphics;Viewer;Photography;
+MimeType=image/jpeg;image/png;image/webp;image/bmp;image/gif;image/tiff;image/vnd.microsoft.icon;
+StartupNotify=true
